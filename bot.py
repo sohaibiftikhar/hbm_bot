@@ -73,7 +73,7 @@ class Job(threading.Thread):
  
         # Thread cleanup code
         self.cleanup()
-        print('Thread #%s stopped' % self.ident)
+        logging.info('Thread #%s stopped' % self.ident)
 
     def setup(self):
         pass
@@ -329,6 +329,8 @@ def parse_command(command, args):
         if diff_result['valid']:
             diff_result['command'] = 'eventsweek'
             result = diff_result
+        else:
+            result = diff_result
     elif command == "eventsorganiser":
         if len(args) > 0:
             result = {
@@ -358,7 +360,7 @@ def parse_subscription_command(args):
             else:
                 result = { 'valid': False, 'reason': "Usage: /subscribe <subscription name> remove" }
         else:
-            result = parse_command(command, args)
+            result = parse_command(command, command_args)
             result['subscription_name'] = subscription_name
     else:
         result = { 'valid': False, 'reason': "Usage: /subscribe <subscription name> <command> <command args>" }
@@ -374,7 +376,7 @@ def parse_difficulty(args):
             result = {'valid': False, 'reason': 'Difficulty must be of the format T<n> where n is a number between 0-6'}
     if len(args) > 1 and result['valid']:
         if args[1] in Difficulty.__members__:
-            diff_hi = Difficulty[args[1]]
+            result['diff_hi'] = Difficulty[args[1]]
         else:
             result = {'valid': False, 'reason': 'Difficulty must be of the format T<n> where n is a number between 0-6'}
     return result
