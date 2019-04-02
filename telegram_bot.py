@@ -525,7 +525,7 @@ def inline(bot, update):
 
 if __name__ == "__main__":
     # Setup logging
-    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    logging.basicConfig(format='HBMTelegramBot %(asctime)s - %(name)s - %(levelname)s - %(message)s',
                          level=logging.INFO)
     # For security read token from environment variable
     if "TELEGRAM_TOKEN" not in os.environ:
